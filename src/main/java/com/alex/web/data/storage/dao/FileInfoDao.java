@@ -1,5 +1,6 @@
 package com.alex.web.data.storage.dao;
 
+import com.alex.web.data.storage.dto.FileFilterDto;
 import com.alex.web.data.storage.entity.FileInfo;
 import com.alex.web.data.storage.exception.DaoException;
 import lombok.*;
@@ -23,10 +24,10 @@ import static lombok.AccessLevel.*;
  * to interaction with the database 'files_repository',schema 'files_storage' and table 'file_info'.This table contains
  * all the necessary information about files that belongs to the specific account.
  */
-
 //@Slf4j
 @Log4j
 @NoArgsConstructor(access = PRIVATE)
+/*@RequiredArgsConstructor*/
 public final class FileInfoDao implements Dao<Long, FileInfo> {
     private static final FileInfoDao INSTANCE = new FileInfoDao();
 
@@ -200,6 +201,58 @@ public final class FileInfoDao implements Dao<Long, FileInfo> {
         }
     }
 
+    /**
+     * Returns list of fileInfo entity by {@link FileFilterDto filter}.Result contains all the fileInfo entities that are available in the table 'file_info'.
+     *
+     * @param filter filter for filtering process during search in the table 'file_info'.
+     * @return list of fileInfo entities.
+     */
+    public List<FileInfo> findAll(Connection connection, FileFilterDto filter) {
+
+        log.debug("Find all the fileInfo by filter:{%s}".formatted(filter));
+        List<Object> parameters = new ArrayList<>();
+        List<String> whereSqlConditions = new ArrayList<>();
+        if ((filter.getUploadDate() != null) && !filter.getUploadDate().isEmpty()) {
+            parameters.add(Date.valueOf(filter.getUploadDate()));
+            whereSqlConditions.add("upload_date > ?");
+        }
+        if ((filter.getName() != null) && !filter.getName().isEmpty()) {
+            parameters.add("%" + filter.getName() + "%");
+            whereSqlConditions.add("name like ?");//Maybe '%?%'
+        }
+        if ((filter.getSize() != null) && !filter.getSize().isEmpty()) {
+            parameters.add(Long.valueOf(filter.getSize()));
+            whereSqlConditions.add("size > ?");
+        }
+        if ((filter.getAccountId() != null) && !filter.getAccountId().isEmpty()) {
+            parameters.add(Long.valueOf(filter.getAccountId()));
+            whereSqlConditions.add("account_id = ?");
+        }
+        String sqlByFilter = Sql.FIND_ALL.query.concat(whereSqlConditions.stream()
+                .collect(Collectors.joining(" AND ", " WHERE ", " LIMIT ?")));
+
+        Integer limit = ((filter.getLimit() != null) && !filter.getLimit().isEmpty())
+                ? Integer.valueOf(filter.getLimit())
+                : Integer.MAX_VALUE;
+
+        parameters.add(limit);
+
+        try (var preparedStatement = connection.prepareStatement(sqlByFilter)) {
+            for (int i = 0; i < parameters.size(); i++) {
+                preparedStatement.setObject(i + 1, parameters.get(i));
+            }
+            log.debug("The search sql query for all the files with filter:{%s}".formatted(preparedStatement));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<FileInfo> files = new ArrayList<>();
+            while (resultSet.next()) {
+                files.add(mapFrom(resultSet));
+            }
+            log.debug("The found List of fileInfo:{%s}".formatted(files));
+            return files;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
 
     /**
      * This is an override method of the{@link Dao#findById(Connection, Object) findById(id)} that find the fileInfo entity in the table 'file_info' by id.
@@ -258,21 +311,6 @@ public final class FileInfoDao implements Dao<Long, FileInfo> {
 
     @SneakyThrows
     private FileInfo mapFrom(ResultSet resultSet) {
-       /* Role role =Role.builder()
-                .id(resultSet.getObject("role_id",Long.class))
-                .name(RoleName.valueOf(resultSet.getObject("r.name",String.class)))
-                .build();
-
-        Account account = Account.builder()
-                .id(resultSet.getObject("account_id",Long.class))
-                .firstName(resultSet.getObject("first_name",String.class))
-                .lastName(resultSet.getObject("last_name",String.class))
-                .birthDate(resultSet.getObject("birth_date", Date.class).toLocalDate())
-                .login(resultSet.getObject("login",String.class))
-                .password(resultSet.getObject("password",String.class))
-                .role(role)
-                .folderData(resultSet.getObject("folder_data",String.class))
-                .build();*/
 
         Long accountId = resultSet.getObject("account_id", Long.class);
         return FileInfo.builder().id(resultSet.getObject("id", Long.class))
@@ -283,6 +321,5 @@ public final class FileInfoDao implements Dao<Long, FileInfo> {
                         .orElseThrow(() -> new DaoException("The account not found by id=%d"
                                 .formatted(accountId))))
                 .build();
-
     }
 }
