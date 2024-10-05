@@ -1,8 +1,8 @@
 CREATE DATABASE files_repository;
 
-CREATE SCHEMA files_storage;
+CREATE SCHEMA IF NOT EXISTS files_storage;
 
-CREATE TABLE role(
+CREATE TABLE IF NOT EXISTS role(
                      id BIGSERIAL PRIMARY KEY ,
                      name VARCHAR(128) NOT NULL UNIQUE
 );
@@ -23,7 +23,7 @@ CREATE TABLE files_storage.account(
 );
 
 
-CREATE TABLE files_storage.file_info(
+CREATE TABLE IF NOT EXISTS files_storage.file_info(
                                         id BIGSERIAL PRIMARY KEY ,
                                         name VARCHAR(128) NOT NULL,
                                         upload_date DATE not null,
