@@ -1,8 +1,10 @@
 package com.alex.web.data.storage.dto;
 
-
+import com.alex.web.data.storage.entity.Role;
 import lombok.Builder;
 import lombok.Value;
+
+import java.time.LocalDate;
 
 /**
  * This class is DTO for the interaction process between {@link com.alex.web.data.storage.servlet.RegistrationServlet servlet}
@@ -11,12 +13,12 @@ import lombok.Value;
 
 @Value
 @Builder
-public class WriteAccountDto {
+public class ReadAccountDto {
+    Long id;
     String firstName;
     String lastName;
-    String birthDate;
+    LocalDate birthDate;
     String login;
-    String password;
-    String role;
+    Role role;
     String folder;
 }

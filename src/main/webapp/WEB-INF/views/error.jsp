@@ -10,6 +10,6 @@
 <head>
     <title>error</title>
 </head>
-<%@include file="header.jsp"%>
+<%@include file="header.jsp" %>
 <span style="color: red">Sorry, but some error of application has been detected.Please,check logs.</span>
 </html>

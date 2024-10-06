@@ -1,6 +1,9 @@
 package com.alex.web.data.storage.exception;
 
+import com.alex.web.data.storage.validator.Error;
+
 import java.util.List;
+
 
 /**
  * This class describes exception which can happen during validation process.This class contains information

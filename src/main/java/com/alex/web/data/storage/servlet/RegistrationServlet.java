@@ -4,6 +4,8 @@ import com.alex.web.data.storage.dto.WriteAccountDto;
 import com.alex.web.data.storage.entity.RoleName;
 import com.alex.web.data.storage.exception.ServiceException;
 import com.alex.web.data.storage.exception.ValidationException;
+import com.alex.web.data.storage.service.AccountService;
+import com.alex.web.data.storage.service.AccountServiceFactory;
 import com.alex.web.data.storage.util.JspConst;
 import com.alex.web.data.storage.util.UrlConst;
 import jakarta.servlet.ServletException;
@@ -27,6 +29,7 @@ import java.io.IOException;
 @Log4j
 @WebServlet(UrlConst.REGISTER)
 public class RegistrationServlet extends HttpServlet {
+    private final AccountService accountService = AccountServiceFactory.getAccountService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,20 +43,21 @@ public class RegistrationServlet extends HttpServlet {
                 .folder(req.getParameter("folder"))
                 .build();
 
-
         try {
-        //call create account from service
-            resp.sendRedirect(UrlConst.LOGIN);
-
-    } catch (ValidationException e) {
-        req.setAttribute("validErrors", e.getErrors());
-        log.warn("The validation errors:{%s}".formatted(e.getErrors()));
-        doGet(req, resp);
-    } catch (ServiceException e) {
-        log.error(" registration error:", e);
-        resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            var readAccountDto = accountService.createAccount(writeAccountDto);
+            log.info("A new account:{%s} has been created".formatted(readAccountDto));
+            if (readAccountDto != null) {
+                resp.sendRedirect(UrlConst.LOGIN);
+            }
+        } catch (ValidationException e) {
+            req.setAttribute("validErrors", e.getErrors());
+            log.warn("The validation errors:{%s}".formatted(e.getErrors()));
+            doGet(req, resp);
+        } catch (ServiceException e) {
+            log.error(" registration error:", e);
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
-}
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

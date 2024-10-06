@@ -10,17 +10,25 @@
 <body>
 
 <hr>
-<b style="color: chocolate;font-size: large" >The File Storage</b>
+<b style="color: chocolate;font-size: large">The File Storage</b>
 
 <c:if test="${empty sessionScope.account}">
-    <a href="${pageContext.request.contextPath}/login"><button type="button">Login</button></a>
-    <a href="${pageContext.request.contextPath}/registration"><button type="button">Registration</button></a>
+    <a href="${pageContext.request.contextPath}/login">
+        <button type="button">Login</button>
+    </a>
+    <a href="${pageContext.request.contextPath}/registration">
+        <button type="button">Registration</button>
+    </a>
 </c:if>
 
 <c:if test="${not empty sessionScope.account}">
-    <a href="${pageContext.request.contextPath}/logout"><button type="button">Logout</button></a>
+    <a href="${pageContext.request.contextPath}/logout">
+        <button type="button">Logout</button>
+    </a>
 </c:if>
-<a href="${pageContext.request.contextPath}/index.jsp"><button type="button">Main page</button></a>
+<a href="${pageContext.request.contextPath}/index.jsp">
+    <button type="button">Main page</button>
+</a>
 
 
 <hr>
