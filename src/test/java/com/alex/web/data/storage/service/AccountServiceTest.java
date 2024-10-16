@@ -1,7 +1,5 @@
 package com.alex.web.data.storage.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.alex.web.data.storage.dao.AccountDao;
 import com.alex.web.data.storage.dao.RoleDao;
 import com.alex.web.data.storage.dto.ReadAccountDto;
@@ -17,7 +15,6 @@ import com.alex.web.data.storage.validator.Error;
 import com.alex.web.data.storage.validator.ValidationResult;
 import com.alex.web.data.storage.validator.WriteAccountDtoValidator;
 import lombok.Cleanup;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -31,6 +28,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
+
 
 @ExtendWith(MockitoExtension.class)
 class AccountServiceTest {
@@ -86,7 +84,8 @@ class AccountServiceTest {
     private ReadAccountDtoMapper readAccountDtoMapper;
     @Mock
     private RoleDao roleDao;
-
+    @Mock
+    private FileInfoService fileInfoService;
     @InjectMocks
     private AccountService accountService;
 
@@ -121,11 +120,11 @@ class AccountServiceTest {
         Error actual = thrown.getErrors().get(0);
 
         Assertions.assertEquals(expected, actual);
-        Mockito.verifyNoInteractions(roleDao, writeAccountDtoMapper, accountDao);
+        Mockito.verifyNoInteractions(roleDao, writeAccountDtoMapper, accountDao, fileInfoService);
     }
 
     @Test
-    void login_shouldReturnReadAccountDto_whenLoginAndPasswordIsValid() throws SQLException {
+    void login_shouldReturnReadAccountDto_whenLoginAndPasswordIsValid(){
         var expected = readAccountDto;
         @Cleanup MockedStatic<ConnectionHelper> connectionHelper = Mockito.mockStatic(ConnectionHelper.class);
         connectionHelper.when(ConnectionHelper::createConnection).thenReturn(null);

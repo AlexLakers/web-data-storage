@@ -20,6 +20,7 @@ import lombok.experimental.UtilityClass;
  * @see FileInfoServiceFactory FileInfoSericeFactory
  */
 
+
 @UtilityClass
 public class AccountServiceFactory {
 
@@ -28,8 +29,8 @@ public class AccountServiceFactory {
                 AccountDao.getInstance(),
                 WriteAccountDtoMapper.getInstance(),
                 ReadAccountDtoMapper.getInstance(),
-                RoleDao.getInstance()
-                //here file service
+                RoleDao.getInstance(),
+                FileInfoServiceFactory.getFileInfoService()
         );
     }
 }

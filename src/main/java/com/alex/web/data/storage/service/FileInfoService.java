@@ -93,6 +93,34 @@ public final class FileInfoService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Returns stream of the file data from file-storage for downloading it by a specific account.
+     *
+     * @param folder   an account folder.
+     * @param fileName the name of specific file.
+     * @return file data as a stream.
+     */
+
+    @SneakyThrows
+    public Optional<InputStream> getFile(String folder, String fileName) {
+        var fullPath = Path.of(BASE_DIR, folder, fileName);
+        log.debug("Get file from the full path:{%s}".formatted(fullPath));
+
+        return Files.exists(fullPath) ?
+                Optional.of(Files.newInputStream(fullPath))
+                : Optional.empty();
+    }
+
+    /**
+     * Create all the necessary directories by transmitted folder name if they aren't exist.
+     *
+     * @param folder an account folder
+     */
+
+    @SneakyThrows
+    public void createFolder(String folder) {
+        Files.createDirectories(Path.of(BASE_DIR, folder));
+    }
 
     /**
      * Returns output dto {@link ReadFileInfoDto readFileInfoDto} after uploading a specific file to the file-storage

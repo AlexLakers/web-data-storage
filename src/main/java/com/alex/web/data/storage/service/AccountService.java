@@ -22,6 +22,7 @@ import java.util.Optional;
 
 import static lombok.AccessLevel.*;
 
+
 /**
  * This class is a Service. It includes the methods for registration and authentication processes
  * for new user in the web-server-storage app.
@@ -31,7 +32,7 @@ import static lombok.AccessLevel.*;
 @RequiredArgsConstructor()
 @Log4j
 public final class AccountService {
-    private static final AccountService INSTANCE=AccountServiceFactory.getAccountService();
+    private static final AccountService INSTANCE = AccountServiceFactory.getAccountService();
 
     public static AccountService getInstance() {
         return INSTANCE;
@@ -42,7 +43,7 @@ public final class AccountService {
     private final WriteAccountDtoMapper writeAccountDtoMapper;
     private final ReadAccountDtoMapper readAccountDtoMapper;
     private final RoleDao roleDao;
-    //here bean file service
+    private final FileInfoService fileInfoService;
 
     @RequiredArgsConstructor(access = PRIVATE)
     private enum Message {
@@ -85,8 +86,8 @@ public final class AccountService {
             throw new ServiceException(Message.CREATING_ERROR.message, e);
         }
 
-        //Here should be a saving directory of current user using some File Service.
-        log.debug("The account:{%1$s} by writeAccountDto:{%2$s} is created"+ saveAccount+writeAccountDto);
+        fileInfoService.createFolder(saveAccount.getFolder());
+        log.debug("The account:{%1$s} by writeAccountDto:{%2$s} is created" + saveAccount + writeAccountDto);
 
         return readAccountDtoMapper.map(saveAccount);
     }
@@ -108,7 +109,7 @@ public final class AccountService {
      */
     public Optional<ReadAccountDto> login(String login, String password) {
 
-        log.debug("Login process by login:{%1$s} and pass:{%2$s}".formatted(login,password));
+        log.debug("Login process by login:{%1$s} and pass:{%2$s}".formatted(login, password));
         Optional<Account> maybeLoginAccount;
 
         try (var connection = ConnectionHelper.createConnection()) {
