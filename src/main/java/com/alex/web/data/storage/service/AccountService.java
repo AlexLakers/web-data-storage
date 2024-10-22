@@ -82,7 +82,6 @@ public final class AccountService {
             );
             saveAccount = accountDao.save(connection, account);
         } catch (SQLException | DaoException e) {
-            ConnectionHelper.closePool();
             throw new ServiceException(Message.CREATING_ERROR.message, e);
         }
 
@@ -119,7 +118,6 @@ public final class AccountService {
             return maybeReadAccountDto;
 
         } catch (SQLException | DaoException e) {
-            ConnectionHelper.closePool();
             throw new ServiceException(Message.LOG_IN_ERROR.message, e);
         }
 

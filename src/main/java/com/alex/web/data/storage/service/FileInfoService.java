@@ -141,7 +141,6 @@ public final class FileInfoService {
         try (var connection = ConnectionHelper.createConnection()) {
             savedFileInfo = fileInfoDao.save(connection, fileInfo);
         } catch (SQLException | DaoException e) {
-            ConnectionHelper.closePool();
             throw new ServiceException(Message.SAVING_ERROR.message, e);
         }
 
@@ -167,7 +166,6 @@ public final class FileInfoService {
                 log.debug("The file and fileInfo are deleted");
             }
         } catch (SQLException | IOException | DaoException e) {
-            ConnectionHelper.closePool();
             throw new ServiceException(Message.DELETING_ERROR.message, e);
         }
 

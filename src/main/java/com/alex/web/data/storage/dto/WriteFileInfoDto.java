@@ -7,6 +7,10 @@ import lombok.Value;
 
 import java.time.LocalDate;
 
+/**
+ * This class is DTO for the interaction process between {@link com.alex.web.data.storage.servlet.UploadFileServlet servlet}
+ * and {@link com.alex.web.data.storage.service.FileInfoService service}.
+ */
 
 @Value
 @Builder
