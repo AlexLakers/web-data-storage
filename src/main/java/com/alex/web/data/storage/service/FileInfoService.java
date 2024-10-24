@@ -14,6 +14,7 @@ import com.alex.web.data.storage.mapper.WriteFileInfoDtoMapper;
 import com.alex.web.data.storage.util.ConnectionHelper;
 import com.alex.web.data.storage.util.PropertiesHelper;
 import com.alex.web.data.storage.validator.FileFilterDtoValidator;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
@@ -37,11 +38,21 @@ import java.util.stream.Collectors;
  */
 
 @Log4j
-@RequiredArgsConstructor()
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FileInfoService {
     private final static String BASE_DIR = PropertiesHelper.getProperty("storage.base.dir");
     private static final int BUFFER_SIZE = 4096;
-    private static final FileInfoService INSTANCE=FileInfoServiceFactory.getFileInfoService();
+    private static final FileInfoService INSTANCE;
+    static {
+        INSTANCE=initFIleInfoServiceBean();
+    }
+
+    private static FileInfoService initFIleInfoServiceBean() {
+        return new FileInfoService(FileInfoDao.getInstance(),
+                FileFilterDtoValidator.getInstance(),
+                ReadFileInfoDtoMapper.getInstance(),
+                WriteFileInfoDtoMapper.getInstance());
+    }
 
     public static FileInfoService getInstance() {
         return INSTANCE;

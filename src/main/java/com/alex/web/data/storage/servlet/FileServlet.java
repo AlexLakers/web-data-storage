@@ -6,7 +6,6 @@ import com.alex.web.data.storage.dto.ReadFileInfoDto;
 import com.alex.web.data.storage.exception.ServiceException;
 import com.alex.web.data.storage.exception.ValidationException;
 import com.alex.web.data.storage.service.FileInfoService;
-import com.alex.web.data.storage.service.FileInfoServiceFactory;
 import com.alex.web.data.storage.util.JspConst;
 import com.alex.web.data.storage.util.UrlConst;
 import jakarta.servlet.ServletException;
@@ -35,7 +34,7 @@ import static com.alex.web.data.storage.servlet.FileServlet.FilterName.*;
 @Log4j
 @WebServlet(UrlConst.FILES)
 public class FileServlet extends HttpServlet {
-    private final FileInfoService fileInfoService = FileInfoServiceFactory.getFileInfoService();
+    private final FileInfoService fileInfoService = FileInfoService.getInstance();
 
     @Getter
     @AllArgsConstructor

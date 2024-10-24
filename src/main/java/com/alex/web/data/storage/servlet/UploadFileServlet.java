@@ -7,7 +7,6 @@ import com.alex.web.data.storage.dto.WriteFileInfoDto;
 import com.alex.web.data.storage.entity.Account;
 import com.alex.web.data.storage.exception.ServiceException;
 import com.alex.web.data.storage.service.FileInfoService;
-import com.alex.web.data.storage.service.FileInfoServiceFactory;
 import com.alex.web.data.storage.util.JspConst;
 import com.alex.web.data.storage.util.UrlConst;
 import jakarta.servlet.ServletException;
@@ -31,7 +30,7 @@ import java.time.LocalDate;
 @WebServlet(UrlConst.UPLOAD)
 @MultipartConfig(fileSizeThreshold = 2048)
 public class UploadFileServlet extends HttpServlet {
-    private final FileInfoService fileInfoService = FileInfoServiceFactory.getFileInfoService();
+    private final FileInfoService fileInfoService = FileInfoService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

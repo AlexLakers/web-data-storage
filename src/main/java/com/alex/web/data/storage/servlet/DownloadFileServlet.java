@@ -2,7 +2,6 @@ package com.alex.web.data.storage.servlet;
 
 import com.alex.web.data.storage.dto.ReadAccountDto;
 import com.alex.web.data.storage.service.FileInfoService;
-import com.alex.web.data.storage.service.FileInfoServiceFactory;
 import com.alex.web.data.storage.util.UrlConst;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -27,7 +26,7 @@ import java.nio.channels.Channels;
 @WebServlet(UrlConst.DOWNLOAD)
 public class DownloadFileServlet extends HttpServlet {
     private static final int BUFFER_SIZE = 4096;
-    private final FileInfoService fileInfoService = FileInfoServiceFactory.getFileInfoService();
+    private final FileInfoService fileInfoService = FileInfoService.getInstance();
 
     @Override
     @SneakyThrows

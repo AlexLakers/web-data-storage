@@ -5,7 +5,6 @@ import com.alex.web.data.storage.dto.DeleteFileInfoDto;
 import com.alex.web.data.storage.dto.ReadAccountDto;
 import com.alex.web.data.storage.exception.ServiceException;
 import com.alex.web.data.storage.service.FileInfoService;
-import com.alex.web.data.storage.service.FileInfoServiceFactory;
 import com.alex.web.data.storage.util.UrlConst;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,7 +23,7 @@ import java.io.IOException;
 @Log4j
 @WebServlet(UrlConst.DELETE)
 public class DeleteFileServlet extends HttpServlet {
-    private final FileInfoService fileInfoService= FileInfoServiceFactory.getFileInfoService();
+    private final FileInfoService fileInfoService= FileInfoService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

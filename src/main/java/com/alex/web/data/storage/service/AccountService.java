@@ -29,10 +29,25 @@ import static lombok.AccessLevel.*;
  * It uses the database connection(database 'file_repository',schema 'files',table 'account').
  */
 
-@RequiredArgsConstructor()
+@RequiredArgsConstructor(access = PRIVATE)
 @Log4j
 public final class AccountService {
-    private static final AccountService INSTANCE = AccountServiceFactory.getAccountService();
+    private static final AccountService INSTANCE;
+
+static {
+    INSTANCE=initAccountServiceBean();
+}
+
+    private static AccountService initAccountServiceBean() {
+   return new AccountService(WriteAccountDtoValidator.getInstance(),
+                AccountDao.getInstance(),
+                WriteAccountDtoMapper.getInstance(),
+                ReadAccountDtoMapper.getInstance(),
+                RoleDao.getInstance(),
+                FileInfoService.getInstance());
+
+}
+    //AccountServiceFactory.getAccountService();
 
     public static AccountService getInstance() {
         return INSTANCE;
