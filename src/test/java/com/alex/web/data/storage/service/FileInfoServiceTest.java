@@ -32,6 +32,9 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 class FileInfoServiceTest {
     private final static String FILE_DESC = "DESC: The date of creation:[%1$s]; The size of file:[%2$d] bytes";
@@ -89,15 +92,15 @@ class FileInfoServiceTest {
         ValidationResult validationResult = new ValidationResult();
         List<ReadFileInfoDto> expected = Collections.singletonList(readFileInfoDto);
         List<FileInfo> fileInfoList = Collections.singletonList(fileInfo);
-        @Cleanup MockedStatic<ConnectionHelper> connectionHelper = Mockito.mockStatic(ConnectionHelper.class);
+        @Cleanup MockedStatic<ConnectionHelper> connectionHelper = mockStatic(ConnectionHelper.class);
         connectionHelper.when(ConnectionHelper::createConnection).thenReturn(null);
-        Mockito.when(fileFilterDtoValidator.isValid(fileFilterDto)).thenReturn(validationResult);
-        Mockito.when(fileInfoDao.findAll(null, fileFilterDto)).thenReturn(fileInfoList);
-        Mockito.when(readFileInfoDtoMapper.map(fileInfo)).thenReturn(readFileInfoDto);
+        when(fileFilterDtoValidator.isValid(fileFilterDto)).thenReturn(validationResult);
+        when(fileInfoDao.findAll(null, fileFilterDto)).thenReturn(fileInfoList);
+        when(readFileInfoDtoMapper.map(fileInfo)).thenReturn(readFileInfoDto);
 
         List<ReadFileInfoDto> actual = fileInfoService.findAll(fileFilterDto);
 
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -108,38 +111,38 @@ class FileInfoServiceTest {
                 .build();
         ValidationResult validationResult = new ValidationResult();
         validationResult.addError(expected);
-        Mockito.when(fileFilterDtoValidator.isValid(fileFilterDto)).thenReturn(validationResult);
+        when(fileFilterDtoValidator.isValid(fileFilterDto)).thenReturn(validationResult);
 
-        ValidationException thrown = Assertions.assertThrows(ValidationException.class, () -> fileInfoService.findAll(fileFilterDto));
+        ValidationException thrown = assertThrows(ValidationException.class, () -> fileInfoService.findAll(fileFilterDto));
         Error actual = thrown.getErrors().get(0);
 
-        Assertions.assertEquals(expected, actual);
-        Mockito.verifyNoInteractions(fileInfoDao, readFileInfoDtoMapper);
+        assertEquals(expected, actual);
+        verifyNoInteractions(fileInfoDao, readFileInfoDtoMapper);
     }
 
     @Test
     void uploadFile_shouldReturnReadFileInfoDto_whenFileWasSaved() throws Exception {
         ByteArrayInputStream bis = new ByteArrayInputStream(new byte[]{1, 2, 3, 4});
-        var mockPart = Mockito.mock(Part.class);
-        Mockito.when(mockPart.getSubmittedFileName()).thenReturn("test_file.txt");
-        Mockito.when(mockPart.getInputStream()).thenReturn(bis);
+        var mockPart = mock(Part.class);
+        when(mockPart.getSubmittedFileName()).thenReturn("test_file.txt");
+        when(mockPart.getInputStream()).thenReturn(bis);
         var expected = readFileInfoDto;
         var writeFileInfoDto = WriteFileInfoDto.builder()
                 .account(account)
                 .part(mockPart)
                 .build();
-        @Cleanup MockedStatic<ConnectionHelper> connectionHelper = Mockito.mockStatic(ConnectionHelper.class);
+        @Cleanup MockedStatic<ConnectionHelper> connectionHelper = mockStatic(ConnectionHelper.class);
         connectionHelper.when(ConnectionHelper::createConnection).thenReturn(null);
-        Mockito.when(writeFileInfoDtoMapper.map(writeFileInfoDto)).thenReturn(fileInfo);
-        Mockito.when(fileInfoDao.save(null, fileInfo)).thenReturn(fileInfo);
-        Mockito.when(readFileInfoDtoMapper.map(fileInfo)).thenReturn(expected);
+        when(writeFileInfoDtoMapper.map(writeFileInfoDto)).thenReturn(fileInfo);
+        when(fileInfoDao.save(null, fileInfo)).thenReturn(fileInfo);
+        when(readFileInfoDtoMapper.map(fileInfo)).thenReturn(expected);
 
         ReadFileInfoDto actual = fileInfoService.uploadFile(writeFileInfoDto);
 
-        Mockito.verify(fileInfoDao, Mockito.times(1)).save(null, fileInfo);
-        Mockito.verify(writeFileInfoDtoMapper, Mockito.times(1)).map(writeFileInfoDto);
-        Mockito.verify(readFileInfoDtoMapper, Mockito.times(1)).map(fileInfo);
-        Assertions.assertEquals(expected, actual);
+        verify(fileInfoDao, times(1)).save(null, fileInfo);
+        verify(writeFileInfoDtoMapper, times(1)).map(writeFileInfoDto);
+        verify(readFileInfoDtoMapper, times(1)).map(fileInfo);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -149,11 +152,11 @@ class FileInfoServiceTest {
                 .folder("Unknown_folder")
                 .name("Unknown_file.exe")
                 .build();
-        Mockito.when(fileInfoDao.delete(Mockito.any(), Mockito.anyLong())).thenReturn(false);
+        when(fileInfoDao.delete(any(), anyLong())).thenReturn(false);
 
         boolean actual = fileInfoService.deleteFile(deleteFileInfoDto);
 
-        Mockito.verify(fileInfoDao).delete(Mockito.any(Connection.class), Mockito.anyLong());
-        Assertions.assertTrue(actual);
+        verify(fileInfoDao).delete(any(Connection.class), anyLong());
+        assertTrue(actual);
     }
 }

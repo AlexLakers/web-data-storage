@@ -27,7 +27,6 @@ import static lombok.AccessLevel.*;
 //@Slf4j
 @Log4j
 @NoArgsConstructor(access = PRIVATE)
-/*@RequiredArgsConstructor*/
 public final class FileInfoDao implements Dao<Long, FileInfo> {
     private static final FileInfoDao INSTANCE = new FileInfoDao();
 

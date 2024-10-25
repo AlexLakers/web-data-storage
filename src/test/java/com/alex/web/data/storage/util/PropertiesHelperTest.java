@@ -9,6 +9,8 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class PropertiesHelperTest {
 
     @ParameterizedTest
@@ -16,7 +18,7 @@ class PropertiesHelperTest {
     void getProperty_shouldReturnString_whenPropertyIsSet(String key, String expected) {
         String actual=PropertiesHelper.getProperty(key);
 
-        Assertions.assertEquals(expected,actual);
+        assertEquals(expected,actual);
     }
     static Stream<Arguments> getValidArguments(){
         return Stream.of(
@@ -33,11 +35,11 @@ class PropertiesHelperTest {
 
         String actual=PropertiesHelper.getProperty(invalidKey);
 
-        Assertions.assertNull(actual);
+        assertNull(actual);
     }
     @ParameterizedTest
     @NullAndEmptySource
     void getProperty_shouldThrowNullPointerException_whenKeyIsNull(String key) {
-        Assertions.assertThrows(IllegalArgumentException.class,()->PropertiesHelper.getProperty(key),"The key is null or empty");
+        assertThrows(IllegalArgumentException.class,()->PropertiesHelper.getProperty(key),"The key is null or empty");
     }
 }

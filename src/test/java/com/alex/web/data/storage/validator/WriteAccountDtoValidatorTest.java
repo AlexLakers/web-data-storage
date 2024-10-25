@@ -8,6 +8,8 @@ import org.junit.jupiter.params.provider.*;
 
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class WriteAccountDtoValidatorTest {
     private final static WriteAccountDtoValidator writeAccountDtoValidator = WriteAccountDtoValidator.getInstance();
 
@@ -26,7 +28,7 @@ class WriteAccountDtoValidatorTest {
         ValidationResult validationResult = writeAccountDtoValidator.isValid(writeAccountDto);
         boolean actual = validationResult.hasErrors();
 
-        Assertions.assertFalse(actual);
+        assertFalse(actual);
     }
 
     @Test
@@ -45,7 +47,7 @@ class WriteAccountDtoValidatorTest {
         ValidationResult validationResult = writeAccountDtoValidator.isValid(writeAccountDto);
         boolean actual = validationResult.hasErrors();
 
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @ParameterizedTest
@@ -64,7 +66,7 @@ class WriteAccountDtoValidatorTest {
         ValidationResult validationResult = writeAccountDtoValidator.isValid(writeAccountDto);
         boolean actual = validationResult.hasErrors();
 
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @ParameterizedTest
@@ -83,7 +85,7 @@ class WriteAccountDtoValidatorTest {
         ValidationResult validationResult = writeAccountDtoValidator.isValid(writeAccountDto);
         boolean actual = validationResult.hasErrors();
 
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @ParameterizedTest
@@ -102,7 +104,7 @@ class WriteAccountDtoValidatorTest {
         ValidationResult validationResult = writeAccountDtoValidator.isValid(writeAccountDto);
         boolean actual = validationResult.hasErrors();
 
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @ParameterizedTest
@@ -120,7 +122,7 @@ class WriteAccountDtoValidatorTest {
 
         ValidationResult validationResult = writeAccountDtoValidator.isValid(writeAccountDto);
         boolean actual = validationResult.hasErrors();
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @ParameterizedTest
@@ -138,7 +140,7 @@ class WriteAccountDtoValidatorTest {
 
         ValidationResult validationResult = writeAccountDtoValidator.isValid(writeAccountDto);
         boolean actual = validationResult.hasErrors();
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @ParameterizedTest
@@ -156,7 +158,7 @@ class WriteAccountDtoValidatorTest {
 
         ValidationResult validationResult = writeAccountDtoValidator.isValid(writeAccountDto);
         boolean actual = validationResult.hasErrors();
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     static Stream<Arguments> getRoleArguments() {
@@ -186,7 +188,7 @@ class WriteAccountDtoValidatorTest {
         ValidationResult validationResult = writeAccountDtoValidator.isValid(writeAccountDto);
         boolean actual = validationResult.hasErrors();
 
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @ParameterizedTest
@@ -205,7 +207,7 @@ class WriteAccountDtoValidatorTest {
         ValidationResult validationResult = writeAccountDtoValidator.isValid(writeAccountDto);
         boolean actual = validationResult.hasErrors();
 
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @ParameterizedTest
@@ -224,7 +226,7 @@ class WriteAccountDtoValidatorTest {
         ValidationResult validationResult = writeAccountDtoValidator.isValid(writeAccountDto);
         boolean actual = validationResult.hasErrors();
 
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
 
     }
 }

@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 
 class ValidationResultTest {
     private ValidationResult validationResult;
@@ -19,7 +21,7 @@ class ValidationResultTest {
 
         boolean actual=validationResult.hasErrors();
 
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @Test
@@ -27,6 +29,6 @@ class ValidationResultTest {
 
         boolean actual=validationResult.hasErrors();
 
-        Assertions.assertFalse(actual);
+        assertFalse(actual);
     }
 }

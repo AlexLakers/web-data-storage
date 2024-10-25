@@ -22,6 +22,7 @@ import static lombok.AccessLevel.*;
  * to interaction with the database 'files_repository',schema 'files_storage' and table 'role'.This table contains
  * all the necessary roles for account authorization process.
  */
+
 //@Slf4j
 @Log4j
 @NoArgsConstructor(access = PRIVATE)

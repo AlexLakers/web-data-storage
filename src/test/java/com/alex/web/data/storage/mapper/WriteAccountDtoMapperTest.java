@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class WriteAccountDtoMapperTest {
 
     @Test
@@ -31,6 +33,6 @@ class WriteAccountDtoMapperTest {
 
         Account actual = WriteAccountDtoMapper.getInstance().map(writeAccountDto);
 
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 }

@@ -10,6 +10,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 
 @ExtendWith(MockitoExtension.class)
 class FileFilterDtoValidatorTest {
@@ -31,7 +33,7 @@ class FileFilterDtoValidatorTest {
         ValidationResult validationResult = fileFilterDtoValidator.isValid(fileFilterDto);
         boolean actual = validationResult.hasErrors();
 
-        Assertions.assertFalse(actual);
+        assertFalse(actual);
     }
 
     @Test
@@ -45,7 +47,7 @@ class FileFilterDtoValidatorTest {
         ValidationResult validationResult = fileFilterDtoValidator.isValid(fileFilterDto);
         boolean actual = validationResult.hasErrors();
 
-        Assertions.assertFalse(actual);
+        assertFalse(actual);
     }
 
     @ParameterizedTest
@@ -60,7 +62,7 @@ class FileFilterDtoValidatorTest {
         ValidationResult validationResult = fileFilterDtoValidator.isValid(fileFilterDto);
         boolean actual = validationResult.hasErrors();
 
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @ParameterizedTest
@@ -76,7 +78,7 @@ class FileFilterDtoValidatorTest {
         ValidationResult validationResult = fileFilterDtoValidator.isValid(fileFilterDto);
         boolean actual = validationResult.hasErrors();
 
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @ParameterizedTest
@@ -91,6 +93,6 @@ class FileFilterDtoValidatorTest {
         ValidationResult validationResult = fileFilterDtoValidator.isValid(fileFilterDto);
         boolean actual = validationResult.hasErrors();
 
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 }

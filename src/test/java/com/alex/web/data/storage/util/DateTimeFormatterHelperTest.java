@@ -31,7 +31,6 @@ class DateTimeFormatterHelperTest {
     @Test
     void parseDate_shouldThrowDateTimeParseException_whenStringDateIsInvalid() {
         String stringDateInvalid = "1993-01-01 00:00:00";
-        /*LocalDate expected=LocalDate.parse(stringDateInvalid,DateTimeFormatter.ofPattern(DATE_FORMAT));*/
         Assertions.assertThrows(DateTimeParseException.class, () -> DateTimeFormatterHelper.parseDate(stringDateInvalid));
     }
 

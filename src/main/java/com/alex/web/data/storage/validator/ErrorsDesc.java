@@ -11,17 +11,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 enum ErrorsDesc {
-    LOGIN("login","111"),
-    PASSWORD("password","222"),
-    BIRTH_DATE("birthDate","333"),
-    FIRST_NAME("firstName","444"),
-    LAST_NAME("lastName","555"),
-    ROLE("role","666"),
-    LIMIT("limit","777"),
-    FILE_NAME("fileName","888"),
-    FILE_SIZE("fileSize","999"),
-    FILE_CREATE_DATE("fileCreatingDate","000"),
-    FOLDER_NAME("folderName","789");
+    LOGIN("111","login"),
+    PASSWORD("222","password"),
+    BIRTH_DATE("333","birthDate"),
+    FIRST_NAME("444","firstName"),
+    LAST_NAME("555","lastName"),
+    ROLE("666","role"),
+    LIMIT("777","limit"),
+    FILE_NAME("888","fileName"),
+    FILE_SIZE("999","fileSize"),
+    FILE_CREATE_DATE("000","fileCreatingDate"),
+    FOLDER_NAME("789","folderName");
 
     private final String errorCode;
     private final String errorName;

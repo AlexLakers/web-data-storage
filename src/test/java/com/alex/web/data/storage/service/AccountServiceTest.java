@@ -29,6 +29,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 
 @ExtendWith(MockitoExtension.class)
 class AccountServiceTest {
@@ -92,18 +95,18 @@ class AccountServiceTest {
     @Test
     void createAccount_shouldReturnAccount_whenWriteAccountDtoIsValid() {
         ValidationResult validationResult = new ValidationResult();
-        @Cleanup MockedStatic<ConnectionHelper> connectionHelper = Mockito.mockStatic(ConnectionHelper.class);
+        @Cleanup MockedStatic<ConnectionHelper> connectionHelper = mockStatic(ConnectionHelper.class);
         connectionHelper.when(ConnectionHelper::createConnection).thenReturn(null);
-        Mockito.when(writeAccountDtoValidator.isValid(writeAccountDto)).thenReturn(validationResult);
-        Mockito.when(roleDao.findByName(null, writeAccountDto.getRole())).thenReturn(Optional.of(role));
-        Mockito.when(writeAccountDtoMapper.map(writeAccountDto)).thenReturn(account);
-        Mockito.when(accountDao.save(null, account)).thenReturn(account);
-        Mockito.when(readAccountDtoMapper.map(account)).thenReturn(readAccountDto);
+        when(writeAccountDtoValidator.isValid(writeAccountDto)).thenReturn(validationResult);
+        when(roleDao.findByName(null, writeAccountDto.getRole())).thenReturn(Optional.of(role));
+        when(writeAccountDtoMapper.map(writeAccountDto)).thenReturn(account);
+        when(accountDao.save(null, account)).thenReturn(account);
+        when(readAccountDtoMapper.map(account)).thenReturn(readAccountDto);
         var expected = readAccountDto;
 
         ReadAccountDto actual = accountService.createAccount(writeAccountDto);
 
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -114,37 +117,37 @@ class AccountServiceTest {
                 .build();
         ValidationResult validationResult = new ValidationResult();
         validationResult.addError(expected);
-        Mockito.when(writeAccountDtoValidator.isValid(writeAccountDto)).thenReturn(validationResult);
+        when(writeAccountDtoValidator.isValid(writeAccountDto)).thenReturn(validationResult);
 
-        ValidationException thrown = Assertions.assertThrows(ValidationException.class, () -> accountService.createAccount(writeAccountDto));
+        ValidationException thrown = assertThrows(ValidationException.class, () -> accountService.createAccount(writeAccountDto));
         Error actual = thrown.getErrors().get(0);
 
-        Assertions.assertEquals(expected, actual);
-        Mockito.verifyNoInteractions(roleDao, writeAccountDtoMapper, accountDao, fileInfoService);
+        assertEquals(expected, actual);
+        verifyNoInteractions(roleDao, writeAccountDtoMapper, accountDao, fileInfoService);
     }
 
     @Test
     void login_shouldReturnReadAccountDto_whenLoginAndPasswordIsValid(){
         var expected = readAccountDto;
-        @Cleanup MockedStatic<ConnectionHelper> connectionHelper = Mockito.mockStatic(ConnectionHelper.class);
+        @Cleanup MockedStatic<ConnectionHelper> connectionHelper = mockStatic(ConnectionHelper.class);
         connectionHelper.when(ConnectionHelper::createConnection).thenReturn(null);
-        Mockito.when(accountDao.findByLoginAndPassword(null, account.getLogin(), account.getPassword())).thenReturn(Optional.of(account));
-        Mockito.when(readAccountDtoMapper.map(account)).thenReturn(expected);
+        when(accountDao.findByLoginAndPassword(null, account.getLogin(), account.getPassword())).thenReturn(Optional.of(account));
+        when(readAccountDtoMapper.map(account)).thenReturn(expected);
 
         ReadAccountDto actual = accountService.login(account.getLogin(), account.getPassword()).get();
 
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     void login_shouldReturnEmptyOptional_whenLoginAndPasswordIsNotValid() {
-        @Cleanup MockedStatic<ConnectionHelper> connectionHelper = Mockito.mockStatic(ConnectionHelper.class);
+        @Cleanup MockedStatic<ConnectionHelper> connectionHelper = mockStatic(ConnectionHelper.class);
         connectionHelper.when(ConnectionHelper::createConnection).thenReturn(null);
-        Mockito.when(accountDao.findByLoginAndPassword(null, account.getLogin(), account.getPassword())).thenReturn(Optional.empty());
+        when(accountDao.findByLoginAndPassword(null, account.getLogin(), account.getPassword())).thenReturn(Optional.empty());
         Optional<ReadAccountDto> actual = accountService.login(account.getLogin(), account.getPassword());
 
-        Assertions.assertTrue(actual.isEmpty());
-        Mockito.verifyNoInteractions(readAccountDtoMapper);
+        assertTrue(actual.isEmpty());
+        verifyNoInteractions(readAccountDtoMapper);
     }
 
 

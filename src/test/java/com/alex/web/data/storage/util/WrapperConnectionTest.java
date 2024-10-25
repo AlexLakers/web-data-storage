@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.concurrent.LinkedBlockingDeque;
 
+import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 class WrapperConnectionTest {
 
@@ -25,6 +27,6 @@ class WrapperConnectionTest {
     void close_shouldAddWrapperConnectionToPool_whenMethodCloseIsCalled() throws SQLException {
         wrapperConnection.close();
 
-        Mockito.verify(linkedBlockingDeque).add(Mockito.any(WrapperConnection.class));
+        verify(linkedBlockingDeque).add(any(WrapperConnection.class));
     }
 }
