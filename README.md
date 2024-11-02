@@ -48,9 +48,9 @@ You need to execute the script 'query.sql':
 ```
 CREATE DATABASE files_repository;
 
-CREATE SCHEMA files_storage IF NOT EXISTS;
+CREATE SCHEMA IF NOT EXISTS files_storage;
 
-CREATE TABLE role IF NOT EXISTS(
+CREATE TABLE IF NOT EXISTS role(
     id BIGSERIAL PRIMARY KEY ,
     name VARCHAR(128) NOT NULL UNIQUE
 );
@@ -59,7 +59,7 @@ INSERT INTO role(name)
     VALUES ('MODERATOR'),('USER'),('ADMIN');
 
 
-CREATE TABLE files_storage.account IF NOT EXISTS(
+CREATE TABLE IF NOT EXISTS files_storage.account(
     id BIGSERIAL PRIMARY KEY,
     first_name VARCHAR(128) NOT NULL,
     last_name VARCHAR(128) NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE files_storage.account IF NOT EXISTS(
 );
 
 
-CREATE TABLE files_storage.file_info IF NOT EXISTS(
+CREATE TABLE IF NOT EXISTS files_storage.file_info(
     id BIGSERIAL PRIMARY KEY ,
     name VARCHAR(128) NOT NULL,
     upload_date DATE NOT NULL,
