@@ -1,9 +1,11 @@
 package com.alex.web.data.storage.util;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * This class contains all the paths to jsp-pages in the app.
  */
-
+@UtilityClass
 public class JspConst {
     private static final String BASE_PATH = "/WEB-INF/views/%1$s.jsp";
     public static final String FILES = BASE_PATH.formatted("files");

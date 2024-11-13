@@ -2,13 +2,13 @@ package com.alex.web.data.storage.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.experimental.UtilityClass;
 
 /**
  * This class contains all the URL for the mapping process between URL and servlet.
  */
 
-@Getter
-@AllArgsConstructor
+@UtilityClass
 public final class UrlConst {
     public static final String FILES="/files";
     public static final String MAIN="/";
