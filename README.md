@@ -8,13 +8,23 @@ If you want to install this web-app for using in the internet then your router s
 
 ## How does it works?
 For example you decided to use this web-app as a user then you have to use some web-browser to open the main page were you can see the app description.
-Then you can go to other pages using a navigation menu. The pages can be private or public, if you aren't authenicated user that you can go only the fallowing pages:
-'/registration','/login','/'.The private pages are '/files','/files/upload' and other specific pages. You should fill all the required fields by the registration form,however you need to know that some 
-fields have limitations, for example you can't set a password if it is too short or it is not used digits and so on. If the registration process is successful then user goes to the login page automatically.
+Then you can go to other pages using a navigation menu. 
+
+![alt text](https://github.com/AlexLakers/ParserJsonCsvToXml/blob/master/WinFormsCsvJsonXml/App_Data/pictures/22.png?raw=true)
+
+The pages can be private or public, if you aren't authenicated user that you can go only **the fallowing pages:**
+'/registration','/login','/'.The private pages are '/files','/files/upload' and other specific pages. You should fill all the required fields by the registration form, however you need to know that some 
+fields have limitations, for example you can't set a password if it is too short or it is not used digits and so on.
+
+![alt text](https://github.com/AlexLakers/ParserJsonCsvToXml/blob/master/WinFormsCsvJsonXml/App_Data/pictures/23.png?raw=true)
+
+If the registration process is successful then user goes to the login page automatically.
 And then you as a authenticated user need to enter your credentials to go to the main page '/files'. On this page you can see all the files in your own file-storage.
 
   Also you can apply dynamic filter that allows to filter search result on the page '/files'. 
 And here you can to store a new file from your PC to web-storage,I want to informative you that data content is stored into the HD or SSD by some server in the base dir. And what about other file information it is stored in the database table 'files'.
+
+![alt text](https://github.com/AlexLakers/ParserJsonCsvToXml/blob/master/WinFormsCsvJsonXml/App_Data/pictures/24.png?raw=true)
 
   By the way I forgot to mention two more database tables.
 Account information is saved in the database too but in the another table 'account'.The last table is 'role' that contains available roles in this app.
