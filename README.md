@@ -13,7 +13,11 @@ Then you can go to other pages using a navigation menu.
 ![alt text](https://github.com/AlexLakers/ParserJsonCsvToXml/blob/master/WinFormsCsvJsonXml/App_Data/pictures/22.png?raw=true)
 
 The pages can be private or public, if you aren't authenicated user that you can go only **the fallowing pages:**
-'/registration','/login','/'.The private pages are '/files','/files/upload' and other specific pages. You should fill all the required fields by the registration form, however you need to know that some 
+'/registration','/login','/'.
+
+![alt text](https://github.com/AlexLakers/ParserJsonCsvToXml/blob/master/WinFormsCsvJsonXml/App_Data/pictures/28.png?raw=true)
+
+The private pages are '/files','/files/upload' and other specific pages. You should fill all the required fields by the registration form, however you need to know that some 
 fields have limitations, for example you can't set a password if it is too short or it is not used digits and so on.
 
 ![alt text](https://github.com/AlexLakers/ParserJsonCsvToXml/blob/master/WinFormsCsvJsonXml/App_Data/pictures/23.png?raw=true)
